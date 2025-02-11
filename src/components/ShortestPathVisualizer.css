@@ -1,0 +1,143 @@
+.pathfinder-container {
+  background-color: #121212;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.algorithm-select {
+  background-color: #1E1E1E;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border: 1px solid #2D2D2D;
+  border-radius: 0.375rem;
+  outline: none;
+}
+
+.algorithm-select:focus {
+  border-color: #9333EA;
+  box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.2);
+}
+
+.visualize-button,
+.reset-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.visualize-button {
+  background-color: #9333EA;
+  color: white;
+}
+
+.visualize-button:hover {
+  background-color: #7E22CE;
+}
+
+.reset-button {
+  background-color: #2D2D2D;
+  color: white;
+}
+
+.reset-button:hover {
+  background-color: #1E1E1E;
+}
+
+.grid-container {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.node {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #2D2D2D;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.node-start {
+  background-color: #22C55E;
+}
+
+.node-finish {
+  background-color: #EF4444;
+}
+
+.node-wall {
+  background-color: #4B5563;
+  animation: wallAnimation 0.3s ease-out forwards;
+}
+
+.node-visited {
+  background-color: #9333EA;
+  animation: visitedAnimation 0.5s ease-out forwards;
+}
+
+.node-path {
+  background-color: #F59E0B;
+  animation: pathAnimation 0.5s ease-out forwards;
+}
+
+@keyframes visitedAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: #9333EA;
+    border-radius: 100%;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: #7E22CE;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #6B21A8;
+  }
+}
+
+@keyframes wallAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: #4B5563;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: #374151;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #1F2937;
+  }
+}
+
+@keyframes pathAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: #F59E0B;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: #D97706;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #B45309;
+  }
+}
