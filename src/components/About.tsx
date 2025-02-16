@@ -6,7 +6,7 @@ const About: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row items-start gap-8 mb-8">
           <img 
-            src="image0.jpeg" 
+            src="Martin Rivera Headshot.jpeg" 
             alt="Martin Rivera"
             className="w-64 h-64 object-cover rounded-lg border-2 border-purple-400"
           />
