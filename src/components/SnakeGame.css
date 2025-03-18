@@ -1,0 +1,342 @@
+/* SnakeGame.css - Modern UI styling for Snake Game */
+
+.snake-game-container {
+  min-height: 100vh;
+  padding: 6rem 1rem 4rem;
+  background: linear-gradient(to bottom, #0a0a0a, #121212);
+  position: relative;
+  overflow: hidden;
+  color: white;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.snake-game-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.snake-game-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  background: linear-gradient(to right, #4f46e5, #9333ea, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px rgba(79, 70, 229, 0.3);
+}
+
+.snake-game-subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #a3a3a3;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+}
+
+.snake-game-area {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    0 0 50px rgba(79, 70, 229, 0.2);
+  background: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.snake-game-area:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 15px 40px rgba(0, 0, 0, 0.6),
+    0 0 70px rgba(79, 70, 229, 0.3);
+}
+
+.snake-game-grid {
+  display: grid;
+  grid-template-columns: repeat(20, 25px);
+  grid-template-rows: repeat(20, 25px);
+  gap: 1px;
+  padding: 10px;
+  background: rgba(20, 20, 20, 0.8);
+}
+
+.snake-cell {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  transition: background-color 0.1s ease, transform 0.1s ease;
+}
+
+.snake-cell-head {
+  background-color: #4f46e5;
+  box-shadow: 0 0 8px rgba(79, 70, 229, 0.8);
+  z-index: 2;
+  border-radius: 4px;
+  transform: scale(1.05);
+}
+
+.snake-cell-body {
+  background-color: #6366f1;
+  z-index: 1;
+}
+
+.snake-cell-food {
+  background-color: #ec4899;
+  box-shadow: 0 0 8px rgba(236, 72, 153, 0.8);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+.snake-cell-empty {
+  background-color: rgba(30, 30, 30, 0.5);
+}
+
+.snake-game-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.snake-game-score-board {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.snake-game-score-container {
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(5px);
+  border-radius: 0.75rem;
+  padding: 1rem 1.5rem;
+  min-width: 150px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.snake-game-score-label {
+  font-size: 0.875rem;
+  color: #a3a3a3;
+  margin-bottom: 0.5rem;
+}
+
+.snake-game-score-value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.snake-game-score-value.current {
+  color: #6366f1;
+}
+
+.snake-game-score-value.high {
+  color: #ec4899;
+}
+
+.snake-game-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.snake-game-button {
+  background: rgba(79, 70, 229, 0.2);
+  color: white;
+  border: 1px solid rgba(79, 70, 229, 0.5);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.snake-game-button:hover {
+  background: rgba(79, 70, 229, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.snake-game-button:active {
+  transform: translateY(0);
+}
+
+.snake-game-button.primary {
+  background: linear-gradient(to right, #4f46e5, #6366f1);
+  border: none;
+}
+
+.snake-game-button.primary:hover {
+  background: linear-gradient(to right, #4338ca, #4f46e5);
+}
+
+.snake-game-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  z-index: 20;
+  min-width: 250px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.snake-game-message-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #ec4899;
+}
+
+.snake-game-message-text {
+  margin-bottom: 1.5rem;
+  color: #d4d4d4;
+}
+
+.snake-game-virtual-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 0.5rem;
+  width: 150px;
+  margin: 0 auto;
+}
+
+.snake-game-virtual-button {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.snake-game-virtual-button:hover {
+  background: rgba(79, 70, 229, 0.3);
+}
+
+.snake-game-virtual-button:active {
+  transform: scale(0.95);
+  background: rgba(79, 70, 229, 0.4);
+}
+
+.snake-game-virtual-button.up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.snake-game-virtual-button.left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.snake-game-virtual-button.right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.snake-game-virtual-button.down {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.snake-game-instructions {
+  text-align: center;
+  margin-top: 2rem;
+  color: #a3a3a3;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.snake-game-instructions kbd {
+  background: rgba(30, 30, 30, 0.8);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-family: monospace;
+  font-size: 0.8rem;
+  margin: 0 0.25rem;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .snake-game-title {
+    font-size: 2.5rem;
+  }
+  
+  .snake-game-grid {
+    grid-template-columns: repeat(20, 20px);
+    grid-template-rows: repeat(20, 20px);
+  }
+  
+  .snake-game-score-board {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .snake-game-score-container {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .snake-game-title {
+    font-size: 2rem;
+  }
+  
+  .snake-game-grid {
+    grid-template-columns: repeat(20, 15px);
+    grid-template-rows: repeat(20, 15px);
+  }
+  
+  .snake-game-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .snake-game-button {
+    width: 100%;
+  }
+}

@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
+import './SnakeGame.css';
 
 interface Position {
   x: number;
@@ -19,6 +21,22 @@ const SnakeGame: React.FC = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const gameAreaRef = useRef<HTMLDivElement>(null);
+  const [showControls, setShowControls] = useState(true);
+
+  // Track mouse position for parallax effects
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   const generateFood = useCallback((): Position => {
     let newFood: Position;
@@ -37,6 +55,9 @@ const SnakeGame: React.FC = () => {
     setFood(INITIAL_FOOD);
     setIsGameOver(false);
     setIsPaused(true);
+    if (score > highScore) {
+      setHighScore(score);
+    }
     setScore(0);
   };
 
@@ -78,27 +99,27 @@ const SnakeGame: React.FC = () => {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      // Always prevent default for arrow keys and space to avoid page scrolling
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+        e.preventDefault();
+      }
+
       if (e.key === ' ') {
         if (isGameOver) {
           resetGame();
         } else {
           setIsPaused(!isPaused);
         }
-        e.preventDefault();
       } else if (!isPaused && !isGameOver) {
         const newDirection = (() => {
           switch (e.key) {
             case 'ArrowUp':
-              e.preventDefault();
               return direction.y === 1 ? direction : { x: 0, y: -1 };
             case 'ArrowDown':
-              e.preventDefault();
               return direction.y === -1 ? direction : { x: 0, y: 1 };
             case 'ArrowLeft':
-              e.preventDefault();
               return direction.x === 1 ? direction : { x: -1, y: 0 };
             case 'ArrowRight':
-              e.preventDefault();
               return direction.x === -1 ? direction : { x: 1, y: 0 };
             default:
               return direction;
@@ -117,65 +138,245 @@ const SnakeGame: React.FC = () => {
     return () => clearInterval(gameLoop);
   }, [moveSnake]);
 
-  return (
-    <div className="bg-[#121212] min-h-screen p-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-[#1E1E1E] rounded-lg p-6 mb-6">
-          <h2 className="text-2xl font-bold text-purple-400 mb-4">Snake Game</h2>
-          <div className="text-gray-300 space-y-2 mb-4">
-            <p>• Use arrow keys to control the snake</p>
-            <p>• Press spacebar to start/pause</p>
-            <p>• Collect food to grow and increase your score</p>
-          </div>
-          <div className="flex justify-between items-center text-white mb-4">
-            <div className="text-lg">Score: {score}</div>
-            <div className="text-lg">
-              {isGameOver ? 'Game Over!' : isPaused ? 'Press Space to Start' : 'Playing'}
-            </div>
-          </div>
-        </div>
+  // Virtual control buttons for mobile
+  const handleVirtualControl = (dir: 'up' | 'down' | 'left' | 'right') => {
+    if (isPaused || isGameOver) return;
+    
+    switch (dir) {
+      case 'up':
+        if (direction.y !== 1) setDirection({ x: 0, y: -1 });
+        break;
+      case 'down':
+        if (direction.y !== -1) setDirection({ x: 0, y: 1 });
+        break;
+      case 'left':
+        if (direction.x !== 1) setDirection({ x: -1, y: 0 });
+        break;
+      case 'right':
+        if (direction.x !== -1) setDirection({ x: 1, y: 0 });
+        break;
+    }
+  };
 
-        <div 
-          className="bg-black rounded-lg p-4"
+  // Particle effect component
+  const Particles = () => {
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 rounded-full bg-white opacity-30"
+            initial={{
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+              scale: Math.random() * 2 + 0.5,
+            }}
+            animate={{
+              x: [
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerWidth,
+                Math.random() * window.innerWidth,
+              ],
+              y: [
+                Math.random() * window.innerHeight,
+                Math.random() * window.innerHeight,
+                Math.random() * window.innerHeight,
+              ],
+              opacity: [0.1, 0.5, 0.1],
+            }}
+            transition={{
+              duration: Math.random() * 20 + 10,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div className="snake-game-container">
+      <Particles />
+      
+      {/* Gradient orbs for background effect */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-purple-600 opacity-10 blur-3xl"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-indigo-600 opacity-10 blur-3xl"></div>
+      
+      <div className="snake-game-wrapper">
+        <motion.h1 
+          className="snake-game-title"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Snake Game
+        </motion.h1>
+        
+        <motion.p 
+          className="snake-game-subtitle"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          Control the snake with arrow keys. Eat food to grow longer, but don't hit the walls or yourself!
+        </motion.p>
+        
+        <motion.div 
+          className="snake-game-area"
+          ref={gameAreaRef}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
           style={{
-            width: GRID_SIZE * CELL_SIZE + 32,
-            height: GRID_SIZE * CELL_SIZE + 32,
-            margin: '0 auto',
+            transform: mousePosition.x && gameAreaRef.current ? 
+              `perspective(1000px) rotateY(${(mousePosition.x - window.innerWidth / 2) / 100}deg) rotateX(${(window.innerHeight / 2 - mousePosition.y) / 100}deg)` : 
+              'perspective(1000px) rotateY(0deg) rotateX(0deg)',
+            transition: 'transform 0.1s ease-out',
           }}
         >
-          <div
-            style={{
-              position: 'relative',
-              width: GRID_SIZE * CELL_SIZE,
-              height: GRID_SIZE * CELL_SIZE,
-              margin: '0 auto',
-            }}
-          >
-            {snake.map((segment, index) => (
-              <div
-                key={index}
-                className="absolute bg-purple-500"
-                style={{
-                  width: CELL_SIZE - 2,
-                  height: CELL_SIZE - 2,
-                  left: segment.x * CELL_SIZE,
-                  top: segment.y * CELL_SIZE,
-                  borderRadius: '2px',
-                }}
-              />
+          <div className="snake-game-grid">
+            {Array.from({ length: GRID_SIZE }).map((_, rowIndex) => (
+              Array.from({ length: GRID_SIZE }).map((_, colIndex) => {
+                const isSnakeHead = snake[0].x === colIndex && snake[0].y === rowIndex;
+                const isSnakeBody = snake.slice(1).some(segment => segment.x === colIndex && segment.y === rowIndex);
+                const isFood = food.x === colIndex && food.y === rowIndex;
+                
+                return (
+                  <motion.div
+                    key={`${rowIndex}-${colIndex}`}
+                    className={`snake-cell ${isSnakeHead ? 'snake-cell-head' : ''} ${isSnakeBody ? 'snake-cell-body' : ''} ${isFood ? 'snake-cell-food' : ''} ${!isSnakeHead && !isSnakeBody && !isFood ? 'snake-cell-empty' : ''}`}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ 
+                      delay: 0.01 * (rowIndex + colIndex),
+                      duration: 0.2 
+                    }}
+                  />
+                );
+              })
             ))}
-            <div
-              className="absolute bg-red-500"
-              style={{
-                width: CELL_SIZE - 2,
-                height: CELL_SIZE - 2,
-                left: food.x * CELL_SIZE,
-                top: food.y * CELL_SIZE,
-                borderRadius: '50%',
-              }}
-            />
           </div>
-        </div>
+          
+          {(isGameOver || isPaused) && (
+            <motion.div 
+              className="snake-game-message"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h2 className="snake-game-message-title">
+                {isGameOver ? 'Game Over!' : 'Paused'}
+              </h2>
+              <p className="snake-game-message-text">
+                {isGameOver ? `Your score: ${score}` : 'Press Space to continue'}
+              </p>
+              <button 
+                className="snake-game-button primary"
+                onClick={isGameOver ? resetGame : () => setIsPaused(false)}
+              >
+                {isGameOver ? 'Play Again' : 'Resume'}
+              </button>
+            </motion.div>
+          )}
+        </motion.div>
+        
+        <motion.div 
+          className="snake-game-controls"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+        >
+          <div className="snake-game-score-board">
+            <div className="snake-game-score-container">
+              <div className="snake-game-score-label">Score</div>
+              <div className="snake-game-score-value current">{score}</div>
+            </div>
+            <div className="snake-game-score-container">
+              <div className="snake-game-score-label">High Score</div>
+              <div className="snake-game-score-value high">{highScore}</div>
+            </div>
+          </div>
+          
+          <div className="snake-game-buttons">
+            <motion.button 
+              className="snake-game-button primary"
+              onClick={() => {
+                if (isGameOver) {
+                  resetGame();
+                } else {
+                  setIsPaused(!isPaused);
+                }
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isGameOver ? 'New Game' : isPaused ? 'Start Game' : 'Pause Game'}
+            </motion.button>
+            
+            <motion.button 
+              className="snake-game-button"
+              onClick={resetGame}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Reset
+            </motion.button>
+            
+            <motion.button 
+              className="snake-game-button"
+              onClick={() => setShowControls(!showControls)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {showControls ? 'Hide Controls' : 'Show Controls'}
+            </motion.button>
+          </div>
+          
+          {showControls && (
+            <motion.div 
+              className="snake-game-virtual-controls"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              transition={{ duration: 0.3 }}
+            >
+              <button 
+                className="snake-game-virtual-button up"
+                onClick={() => handleVirtualControl('up')}
+              >
+                ↑
+              </button>
+              <button 
+                className="snake-game-virtual-button left"
+                onClick={() => handleVirtualControl('left')}
+              >
+                ←
+              </button>
+              <button 
+                className="snake-game-virtual-button right"
+                onClick={() => handleVirtualControl('right')}
+              >
+                →
+              </button>
+              <button 
+                className="snake-game-virtual-button down"
+                onClick={() => handleVirtualControl('down')}
+              >
+                ↓
+              </button>
+            </motion.div>
+          )}
+        </motion.div>
+        
+        <motion.div 
+          className="snake-game-instructions"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          <p>Use <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> to move the snake. Press <kbd>Space</kbd> to pause/resume.</p>
+          <p>Mobile users can use the on-screen controls above.</p>
+        </motion.div>
       </div>
     </div>
   );

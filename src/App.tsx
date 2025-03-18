@@ -4,10 +4,14 @@ import Navbar from './components/Navbar';
 import About from './components/About';
 import Experience from './components/Experience';
 import Education from './components/Education';
+import Projects from './components/Projects';
 import SnakeGame from './components/SnakeGame';
 import ShortestPathVisualizer from './components/ShortestPathVisualizer';
 import CommandLine from './components/CommandLine';
 import EcommerceStore from './components/ecommerce/EcommerceStore';
+import AssemblyVisualizer from './components/AssemblyVisualizer';
+import MockOSVisualizer from './components/MockOSVisualizer';
+import ReservationAnalyzer from './components/ReservationAnalyzer';
 
 const App: React.FC = () => {
   return (
@@ -19,10 +23,14 @@ const App: React.FC = () => {
             <Route path="/" element={<About />} />
             <Route path="/experience" element={<Experience />} />
             <Route path="/education" element={<Education />} />
-            <Route path="/snake" element={<SnakeGame />} />
-            <Route path="/pathfinder" element={<ShortestPathVisualizer />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/snake-game" element={<SnakeGame />} />
+            <Route path="/pathfinding" element={<ShortestPathVisualizer />} />
             <Route path="/cli" element={<CommandLine />} />
-            <Route path="/store" element={<EcommerceStore />} />
+            <Route path="/tech-store" element={<EcommerceStore />} />
+            <Route path="/assembly-visualizer" element={<AssemblyVisualizer />} />
+            <Route path="/os-visualizer" element={<MockOSVisualizer />} />
+            <Route path="/reservation-analyzer" element={<ReservationAnalyzer />} />
           </Routes>
         </main>
       </div>
