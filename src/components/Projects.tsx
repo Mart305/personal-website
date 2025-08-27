@@ -9,8 +9,26 @@ const Projects: React.FC = () => {
   const projectsRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
 
-  // Updated project data - removed specified projects and kept only the ones to keep
+  // Updated project data - includes embedded external projects
   const projects = [
+    {
+      title: "ParklandGo - Indoor Navigation",
+      description: "React Native indoor navigation app with GeoJSON mapping system and A* pathfinding algorithms. Converts CAD floor plans into coordinate-aligned digital maps for hospital navigation.",
+      tech: ["React Native", "TypeScript", "GeoJSON", "A* Algorithm"],
+      link: "https://parklandgo.netlify.app",
+      external: true,
+      image: "/projects/parklandgo.png",
+      color: "from-blue-500 to-cyan-500"
+    },
+    {
+      title: "Incursion",
+      description: "Interactive game developed and published on itch.io. Features engaging gameplay mechanics and polished user experience with custom graphics and sound design.",
+      tech: ["Game Development", "Interactive Design", "itch.io"],
+      link: "https://mart305.itch.io/incursion",
+      external: true,
+      image: "/projects/incursion.png",
+      color: "from-red-500 to-orange-500"
+    },
     {
       title: "Snake Game",
       description: "A classic Snake game implemented with modern controls and smooth animations. Features include score tracking, increasing difficulty, and responsive controls.",
@@ -261,20 +279,39 @@ const Projects: React.FC = () => {
                       ))}
                     </div>
                     
-                    <Link 
-                      to={project.link} 
-                      className="group/btn inline-flex items-center text-sm font-medium"
-                    >
-                      <span className={`relative inline-flex overflow-hidden rounded-full px-4 py-2 bg-gradient-to-r ${project.color} bg-opacity-10`}>
-                        <span className={`absolute inset-0 bg-gradient-to-r ${project.color} opacity-20 group-hover/btn:opacity-40 transition-opacity duration-300`}></span>
-                        <span className="relative flex items-center">
-                          Explore Project
-                          <svg className="w-4 h-4 ml-2 transform group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
+                    {project.external ? (
+                      <a 
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/btn inline-flex items-center text-sm font-medium"
+                      >
+                        <span className={`relative inline-flex overflow-hidden rounded-full px-4 py-2 bg-gradient-to-r ${project.color} bg-opacity-10`}>
+                          <span className={`absolute inset-0 bg-gradient-to-r ${project.color} opacity-20 group-hover/btn:opacity-40 transition-opacity duration-300`}></span>
+                          <span className="relative flex items-center">
+                            View Live Project
+                            <svg className="w-4 h-4 ml-2 transform group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </span>
                         </span>
-                      </span>
-                    </Link>
+                      </a>
+                    ) : (
+                      <Link 
+                        to={project.link} 
+                        className="group/btn inline-flex items-center text-sm font-medium"
+                      >
+                        <span className={`relative inline-flex overflow-hidden rounded-full px-4 py-2 bg-gradient-to-r ${project.color} bg-opacity-10`}>
+                          <span className={`absolute inset-0 bg-gradient-to-r ${project.color} opacity-20 group-hover/btn:opacity-40 transition-opacity duration-300`}></span>
+                          <span className="relative flex items-center">
+                            Explore Project
+                            <svg className="w-4 h-4 ml-2 transform group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </span>
+                        </span>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </motion.div>
@@ -295,37 +332,71 @@ const Projects: React.FC = () => {
                 transition={{ delay: index * 0.1 }}
                 className="group bg-[#1a1a1a]/80 backdrop-blur-lg rounded-xl overflow-hidden border border-gray-800/50 hover:border-gray-700/70 transition-all duration-300"
               >
-                <Link to={project.link} className="block">
-                  <div className="p-6">
-                    <div className="flex flex-col md:flex-row md:items-center gap-6">
-                      <div className="flex-grow">
-                        <h2 className={`text-xl font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-3 group-hover:translate-x-1 transition-transform duration-300`}>
-                          {project.title}
-                        </h2>
-                        <p className="text-gray-400 mb-4">
-                          {project.description}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {project.tech.map((tech) => (
-                            <span
-                              key={tech}
-                              className="px-3 py-1 bg-[#2a2a2a]/50 text-sm text-gray-300 rounded-full backdrop-blur-sm"
-                            >
-                              {tech}
-                            </span>
-                          ))}
+                {project.external ? (
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" className="block">
+                    <div className="p-6">
+                      <div className="flex flex-col md:flex-row md:items-center gap-6">
+                        <div className="flex-grow">
+                          <h2 className={`text-xl font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-3 group-hover:translate-x-1 transition-transform duration-300`}>
+                            {project.title}
+                          </h2>
+                          <p className="text-gray-400 mb-4">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {project.tech.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-3 py-1 bg-[#2a2a2a]/50 text-sm text-gray-300 rounded-full backdrop-blur-sm"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center justify-end">
-                        <div className={`rounded-full p-3 bg-gradient-to-r ${project.color} bg-opacity-10 group-hover:scale-110 transition-transform duration-300`}>
-                          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
+                        <div className="flex items-center justify-end">
+                          <div className={`rounded-full p-3 bg-gradient-to-r ${project.color} bg-opacity-10 group-hover:scale-110 transition-transform duration-300`}>
+                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
+                  </a>
+                ) : (
+                  <Link to={project.link} className="block">
+                    <div className="p-6">
+                      <div className="flex flex-col md:flex-row md:items-center gap-6">
+                        <div className="flex-grow">
+                          <h2 className={`text-xl font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent mb-3 group-hover:translate-x-1 transition-transform duration-300`}>
+                            {project.title}
+                          </h2>
+                          <p className="text-gray-400 mb-4">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            {project.tech.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-3 py-1 bg-[#2a2a2a]/50 text-sm text-gray-300 rounded-full backdrop-blur-sm"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-end">
+                          <div className={`rounded-full p-3 bg-gradient-to-r ${project.color} bg-opacity-10 group-hover:scale-110 transition-transform duration-300`}>
+                            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                )}
               </motion.div>
             ))}
           </motion.div>

@@ -61,15 +61,26 @@ const Experience: React.FC = () => {
   // Experience data
   const professionalExperience = [
     {
-      title: "Introduction to Computer Science - Section Lead",
-      company: "Washington University in St. Louis",
-      period: "Aug. 2023-Present",
+      title: "Software Engineer",
+      company: "Parkland Hospital, Dallas, TX",
+      period: "Jun. 2025 – Aug. 2025",
       responsibilities: [
-        "Guided studio sessions of 4-9 students through CSE131 Introduction to Computer Science Java projects",
-        "Assisted 300+ students individually with Java assignments during office hours and help sessions",
-        "Promoted to section lead from 100 teaching assistants by the course instructor to ensure efficiency and compliance"
+        "Prototyped a React Native indoor navigation app in TypeScript for a Shark Tank-style pitch to hospital management, demonstrating a tech solution for patient navigation challenges",
+        "Engineered GeoJSON mapping system converting CAD floor plans into coordinate-aligned digital maps with sub-meter accuracy",
+        "Implemented A* pathfinding algorithms to calculate optimal routes between 15+ departments and POIs"
       ],
       gradient: "from-blue-500 via-cyan-500 to-teal-500"
+    },
+    {
+      title: "IT & Financial Internal Auditor",
+      company: "Parkland Hospital, Dallas, TX",
+      period: "Jun. 2025 – Aug. 2025",
+      responsibilities: [
+        "Audited 3,000+ Ethernet ports across hospital facilities, verifying network security and access compliance",
+        "Documented noncompliant ports and coordinated with IT to enforce security policy remediation",
+        "Analyzed cash management processes, tracking handling, transport, and reconciliation procedures"
+      ],
+      gradient: "from-cyan-500 via-teal-500 to-green-500"
     },
     {
       title: "Creative Lab Consultant",
@@ -80,7 +91,7 @@ const Experience: React.FC = () => {
         "Resolved technical issues related to computers, printers, and projectors, reducing downtime by 15%",
         "Led equipment recycling and hardware and software upgrades, improving inventory management by 10%"
       ],
-      gradient: "from-cyan-500 via-teal-500 to-green-500"
+      gradient: "from-green-500 via-emerald-500 to-teal-500"
     },
     {
       title: "Student Election Clerk",
@@ -90,7 +101,7 @@ const Experience: React.FC = () => {
         "Checked voter identification and signed in 400 registered voters prior to administering ballots",
         "Installed ballot equipment and resolved software and printer errors for a team of 3 election clerks"
       ],
-      gradient: "from-teal-500 via-green-500 to-emerald-500"
+      gradient: "from-emerald-500 via-cyan-500 to-blue-500"
     },
     {
       title: "Dallas Mayor's Fellows Intern",
@@ -100,7 +111,7 @@ const Experience: React.FC = () => {
         "Managed administrative data using spreadsheet and presentation software to improve data accessibility by 20%",
         "Collaborated with medical professionals to streamline patient service processes reducing wait times by 25%"
       ],
-      gradient: "from-green-500 via-emerald-500 to-teal-500"
+      gradient: "from-cyan-500 via-purple-500 to-pink-500"
     }
   ];
 

@@ -30,6 +30,8 @@ const Navbar: React.FC = () => {
 
   // Project dropdown items
   const projectItems = [
+    { path: 'https://parklandgo.netlify.app', label: 'ParklandGo', external: true },
+    { path: 'https://mart305.itch.io/incursion', label: 'Incursion', external: true },
     { path: '/snake-game', label: 'Snake Game' },
     { path: '/pathfinding', label: 'Pathfinding' },
     { path: '/tech-store', label: 'Tech Store' },
@@ -143,17 +145,32 @@ const Navbar: React.FC = () => {
                       >
                         <div className="py-1">
                           {projectItems.map((project) => (
-                            <Link
-                              key={project.path}
-                              to={project.path}
-                              className={`block px-4 py-2 text-sm ${
-                                location.pathname === project.path
-                                  ? 'text-blue-400 bg-gray-800'
-                                  : 'text-gray-300 hover:text-blue-400 hover:bg-gray-800'
-                              }`}
-                            >
-                              {project.label}
-                            </Link>
+                            project.external ? (
+                              <a
+                                key={project.path}
+                                href={project.path}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block px-4 py-2 text-sm text-gray-300 hover:text-blue-400 hover:bg-gray-800 flex items-center"
+                              >
+                                {project.label}
+                                <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                              </a>
+                            ) : (
+                              <Link
+                                key={project.path}
+                                to={project.path}
+                                className={`block px-4 py-2 text-sm ${
+                                  location.pathname === project.path
+                                    ? 'text-blue-400 bg-gray-800'
+                                    : 'text-gray-300 hover:text-blue-400 hover:bg-gray-800'
+                                }`}
+                              >
+                                {project.label}
+                              </Link>
+                            )
                           ))}
                         </div>
                       </motion.div>
@@ -235,17 +252,32 @@ const Navbar: React.FC = () => {
                     </Link>
                     <div className="pl-4">
                       {projectItems.map((project) => (
-                        <Link
-                          key={project.path}
-                          to={project.path}
-                          className={`block px-3 py-2 text-sm ${
-                            location.pathname === project.path
-                              ? 'text-blue-400 bg-gray-800'
-                              : 'text-gray-300 hover:text-blue-400 hover:bg-gray-800'
-                          }`}
-                        >
-                          {project.label}
-                        </Link>
+                        project.external ? (
+                          <a
+                            key={project.path}
+                            href={project.path}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block px-3 py-2 text-sm text-gray-300 hover:text-blue-400 hover:bg-gray-800 flex items-center"
+                          >
+                            {project.label}
+                            <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        ) : (
+                          <Link
+                            key={project.path}
+                            to={project.path}
+                            className={`block px-3 py-2 text-sm ${
+                              location.pathname === project.path
+                                ? 'text-blue-400 bg-gray-800'
+                                : 'text-gray-300 hover:text-blue-400 hover:bg-gray-800'
+                            }`}
+                          >
+                            {project.label}
+                          </Link>
+                        )
                       ))}
                     </div>
                   </div>

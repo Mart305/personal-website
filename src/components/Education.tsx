@@ -77,16 +77,22 @@ const Education: React.FC = () => {
   const educationData: EducationItem[] = [
     {
       school: "Washington University in St. Louis",
-      degree: "Bachelor of Science in Computer Science",
+      degree: "Bachelor of Science in Computer Science, Minor in Finance",
       period: "Expected May 2026",
       courses: {
         computerScience: [
-          "Data Structures and Algorithms",
-          "Object-Oriented Software Development",
-          "Introduction to Computer Science",
-          "Rapid Prototype Development"
+          "Software Engineering for External Clients",
+          "Parallel & Concurrent Programming",
+          "Rapid Prototyping (JavaScript, Python, PHP, SQL, MySQL, React)",
+          "Data Structures and Algorithms (Java)",
+          "Video Game Programming (C#)",
+          "Data Science (Python)",
+          "Object-Oriented Programming (C++)",
+          "Artificial Intelligence (Python)"
         ],
         mathematics: [
+          "Capital Markets & Financial Management",
+          "Investments",
           "Calculus II & III",
           "Matrix Algebra",
           "Probability and Statistics",
@@ -103,9 +109,12 @@ const Education: React.FC = () => {
       period: "May 2022",
       achievements: [
         "Valedictorian",
-        "National Honor Society President",
-        "AP Scholar with Distinction",
-        "Academic Excellence Award"
+        "National Honor Society",
+        "National AP Scholar with Distinction",
+        "National Hispanic Recognition Scholar",
+        "Dartmouth Alumni Book Club Award",
+        "World Affairs Council of Dallas/Fort Worth's 20 Under 20",
+        "State Visual Arts Scholastic Event"
       ],
       gradient: "from-purple-500 via-pink-500 to-red-500",
       achievementColor: "pink-400"

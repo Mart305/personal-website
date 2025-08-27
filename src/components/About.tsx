@@ -59,15 +59,15 @@ const About: React.FC = () => {
   const skillCategories = [
     {
       title: "Programming Languages",
-      skills: ["Java", "C/C++", "Python", "JavaScript", "TypeScript", "HTML/CSS"]
+      skills: ["Java", "JavaScript", "TypeScript", "Python", "C++", "C#", "HTML/CSS", "SQL", "PHP"]
     },
     {
       title: "Frameworks & Libraries",
-      skills: ["React", "Node.js", "Express", "MongoDB", "MySQL", "AWS"]
+      skills: ["React", "React Native", "Node.js", "MongoDB", "MySQL", "AWS", "Unity", "Apache"]
     },
     {
       title: "Tools & Technologies",
-      skills: ["Git", "Docker", "Pandas", "NumPy", "Tableau", "Adobe Creative Suite"]
+      skills: ["Git", "GitHub", "Pandas", "Eclipse", "Arduino", "AVR Assembly", "GeoJSON"]
     },
     {
       title: "Languages",
@@ -77,20 +77,19 @@ const About: React.FC = () => {
 
   const projects = [
     {
+      title: "Professional Projects",
+      items: [
+        "ParklandGo - React Native indoor navigation app with GeoJSON mapping and A* pathfinding",
+        "Incursion - Interactive game published on itch.io with custom graphics and sound design"
+      ]
+    },
+    {
       title: "Interactive Projects",
       items: [
         "Snake Game - Classic game with modern controls and animations",
         "Pathfinding Visualizer - Interactive tool for visualizing search algorithms",
         "Tech Store - E-commerce platform with shopping cart and checkout",
         "Command Line Interface - Unix-like CLI with file system operations"
-      ]
-    },
-    {
-      title: "Other Skills",
-      items: [
-        "Data Analysis - Experience with data visualization and analysis",
-        "Web Development - Full-stack development with modern frameworks",
-        "UI/UX Design - Creating intuitive and responsive user interfaces"
       ]
     }
   ];
@@ -145,9 +144,7 @@ const About: React.FC = () => {
             </h1>
             <div className="h-1 w-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded mb-6"></div>
             <p className="text-gray-300 text-lg mb-6 leading-relaxed max-w-2xl">
-              Computer Science student at Washington University in St. Louis with a focus on software development
-              and financial technology. Currently serving as a Section Lead for Introduction to Computer Science,
-              where I guide students through Java programming concepts and best practices.
+              Computer Science student at Washington University in St. Louis with a minor in Finance. Former Teaching Assistant Section Lead for Introduction to Computer Science, where I guided students through Java programming concepts and oversaw 50+ teaching assistants. Recent Software Engineer intern at Parkland Hospital developing React Native navigation applications.
             </p>
             <div className="flex flex-wrap gap-4">
               <motion.a 
